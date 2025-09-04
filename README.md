@@ -1,4 +1,4 @@
 # Poke-Marquers
 Python script to do simple pokemon marquers
 
-Pull the file u need to the same folder as script and run Maker Maker v1
+Updated with simple UI requesting folder with files to do the marquers
