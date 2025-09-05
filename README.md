@@ -11,9 +11,9 @@ Master Set SV 1 - Scarlet and Violet (Base Set) - Complete
 
 Master Set SV 2 - Paldea Evolved - Complete
 
-Master Set SV 3 - Obsidian Flames - Working on it
+Master Set SV 3 - Obsidian Flames - Complete
 
-Master Set SV 3.5 - Scarlet & Violet 151 - Soon
+Master Set SV 3.5 - Scarlet & Violet 151 - Working on it
 
 Master Set SV 4 - Paradox Rift - Soon
 
