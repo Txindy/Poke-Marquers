@@ -1,16 +1,19 @@
-# Poke-Marquers
+# Poke-Marquers #
+Python script to do simple pokemon markers
 
-Python script to do simple pokemon marquers
+#Changelog#
+Updated with simple UI
+============================================================================
 
-Updated with simple UI requesting folder with files to do the marquers
+Sets Included
 
-Master Set SV 1 - Scarlet and Violet (Base Set) - Working on it
+Master Set SV 1 - Scarlet and Violet (Base Set) - Complete
 
-Master Set SV 2 - Paldea Evolved - Finished
+Master Set SV 2 - Paldea Evolved - Complete
 
-Master Set SV 3 - Obsidian Flames - Soon
+Master Set SV 3 - Obsidian Flames - Working on it
 
-Master Set SV 3.5 - Scarlet \& Violet 151 - Soon
+Master Set SV 3.5 - Scarlet & Violet 151 - Soon
 
 Master Set SV 4 - Paradox Rift - Soon
 
