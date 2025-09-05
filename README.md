@@ -13,9 +13,9 @@ Master Set SV 2 - Paldea Evolved - Complete
 
 Master Set SV 3 - Obsidian Flames - Complete
 
-Master Set SV 3.5 - Scarlet & Violet 151 - Working on it
+Master Set SV 3.5 - Scarlet & Violet 151 - Complete
 
-Master Set SV 4 - Paradox Rift - Soon
+Master Set SV 4 - Paradox Rift - Working on it
 
 Master Set SV 4.5 - Paldean Fates - Soon
 
