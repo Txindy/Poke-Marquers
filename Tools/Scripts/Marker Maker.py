@@ -178,20 +178,51 @@ def run_gui() -> None:
                     return
                 rows_win = tk.Toplevel(root)
                 rows_win.title(f"Select Cards - {os.path.basename(path)}")
-                tk.Label(rows_win, text="Select cards to print (Ctrl/Cmd or Shift for multi-select):").pack(anchor="w", padx=10, pady=(10, 6))
-                listbox = tk.Listbox(rows_win, selectmode=tk.EXTENDED, width=80, height=20)
-                listbox.pack(fill="both", expand=True, padx=10)
+                tk.Label(rows_win, text="Check cards to print:").pack(anchor="w", padx=10, pady=(10, 6))
+
+                # Scrollable area with checkboxes
+                container = ttk.Frame(rows_win)
+                container.pack(fill="both", expand=True, padx=10)
+                canvas = tk.Canvas(container, height=360)
+                vscroll = ttk.Scrollbar(container, orient="vertical", command=canvas.yview)
+                inner = ttk.Frame(canvas)
+                inner.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+                canvas.create_window((0, 0), window=inner, anchor="nw")
+                canvas.configure(yscrollcommand=vscroll.set)
+                canvas.pack(side="left", fill="both", expand=True)
+                vscroll.pack(side="right", fill="y")
+
+                # Enable mouse wheel scrolling on all platforms
+                def _on_mousewheel(event):
+                    try:
+                        delta = int(-1 * (event.delta / 120))
+                        canvas.yview_scroll(delta, "units")
+                    except Exception:
+                        pass
+                    return "break"
+
+                # Windows and macOS
+                canvas.bind_all("<MouseWheel>", _on_mousewheel)
+                # Linux
+                canvas.bind_all("<Button-4>", lambda e: (canvas.yview_scroll(-1, "units"), "break"))
+                canvas.bind_all("<Button-5>", lambda e: (canvas.yview_scroll(1, "units"), "break"))
+
+                vars_list: List[tk.BooleanVar] = []
                 for _, r in df.iterrows():
-                    listbox.insert(tk.END, f"{r['Number']} - {r['Name']} - {r['Variant']}")
+                    var = tk.BooleanVar(value=False)
+                    text = f"{r['Number']} - {r['Name']} - {r['Variant']}"
+                    cb = tk.Checkbutton(inner, text=text, variable=var, anchor="w", justify="left")
+                    cb.pack(fill="x", anchor="w")
+                    vars_list.append(var)
 
                 selected_idx: List[int] = []
 
                 def on_rows_ok() -> None:
-                    sel = listbox.curselection()
-                    if not sel:
-                        messagebox.showinfo("No selection", "Please select at least one card or Cancel.")
+                    idxs = [i for i, v in enumerate(vars_list) if v.get()]
+                    if not idxs:
+                        messagebox.showinfo("No selection", "Please check at least one card or Cancel.")
                         return
-                    selected_idx.extend(sel)
+                    selected_idx.extend(idxs)
                     rows_win.destroy()
 
                 def on_rows_cancel() -> None:

@@ -142,8 +142,8 @@ def merge_items_with_duplicates(items_a: List[Dict[str, str]], items_b: List[Dic
     return result
 
 def main():
-    lines_a = read_blocked_input("Paste FIRST list:")
-    lines_b = read_blocked_input("Paste SECOND list:")
+    lines_a = read_blocked_input("Paste Standart list:")
+    lines_b = read_blocked_input("Paste Parallel list:")
     items_a = parse_list(lines_a, variant_override="Normal")
     items_b = parse_list(lines_b)
     merged = merge_items_with_duplicates(items_a, items_b)
