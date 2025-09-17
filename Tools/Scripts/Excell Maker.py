@@ -1,7 +1,9 @@
+#!/usr/bin/env python3
 import re
 import sys
 from collections import defaultdict
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Optional
+from pathlib import Path
 
 try:
     import pandas as pd
@@ -141,9 +143,41 @@ def merge_items_with_duplicates(items_a: List[Dict[str, str]], items_b: List[Dic
     
     return result
 
+def sort_excel_file(file_path: str) -> None:
+    """Sort the Excel file by Number and Variant Type"""
+    try:
+        df = pd.read_excel(file_path)
+        
+        required = {"Variant Type", "Number"}
+        missing = required - set(df.columns)
+        if missing:
+            print(f"Error: missing columns: {', '.join(sorted(missing))}")
+            return
+        
+        # Create sorting order for variant types
+        variant_order = {"Normal": 0, "Reverse Holo": 1}
+        df["VariantSort"] = df["Variant Type"].map(variant_order)
+        
+        # Sort by Number first, then by Variant Type
+        df.sort_values(by=["Number", "VariantSort"], inplace=True)
+        df.drop(columns=["VariantSort"], inplace=True)
+        
+        # Save the sorted data back to the same file
+        df.to_excel(file_path, index=False)
+        print("✅ File has been automatically sorted and saved!")
+        
+    except Exception as e:
+        print(f"Error sorting file: {e}")
+
 def main():
-    lines_a = read_blocked_input("Paste Standart list:")
+    print("=== Excel Maker and Sorter ===")
+    print("This script will create an Excel file and automatically sort it.\n")
+    
+    # Get input from user
+    lines_a = read_blocked_input("Paste Standard list:")
     lines_b = read_blocked_input("Paste Parallel list:")
+    
+    # Parse the lists
     items_a = parse_list(lines_a, variant_override="Normal")
     items_b = parse_list(lines_b)
     merged = merge_items_with_duplicates(items_a, items_b)
@@ -152,10 +186,17 @@ def main():
         print("No cards parsed. Please check the input format.")
         return
 
+    # Create DataFrame and save to Excel
     df = pd.DataFrame(merged, columns=["Name", "Number", "Variant Type"])
     out_file = "cards.xlsx"
     df.to_excel(out_file, index=False)
-    print(f"Wrote {len(df)} rows to {out_file}")
+    print(f"📝 Created Excel file with {len(df)} rows: {out_file}")
+    
+    # Automatically sort the created file
+    print("🔄 Automatically sorting the Excel file...")
+    sort_excel_file(out_file)
+    
+    print(f"\n✅ Complete! The sorted Excel file '{out_file}' is ready to use.")
 
 if __name__ == "__main__":
     main()
