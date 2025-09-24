@@ -9,12 +9,12 @@ A comprehensive Python toolkit for managing Pokémon card collections and creati
 - **Master Set SV 2** - Paldea Evolved ✅
 - **Master Set SV 3** - Obsidian Flames ✅
 - **Master Set SV 3.5** - Scarlet & Violet 151 ✅
+- **Master Set SV 4** - Paradox Rift ✅
 
 ### In Progress
-- **Master Set SV 4** - Paradox Rift 
+- Master Set SV 4.5 - Paldean Fates
 
 ### Coming Soon
-- Master Set SV 4.5 - Paldean Fates
 - Master Set SV 5 - Temporal Forces
 - Master Set SV 6 - Twilight Masquerade
 - Master Set SV 6.5 - Shrouded Fable
@@ -29,7 +29,6 @@ A comprehensive Python toolkit for managing Pokémon card collections and creati
 ## Features
 
 - **Excel Maker**: Convert card lists into organized Excel spreadsheets
-- **Excel Sorter**: Automatically sort Excel files by card number and variant type
 - **Marker Maker**: Generate custom markers for your Pokémon card collection
 
 ## Tools Overview
@@ -66,26 +65,7 @@ Rarity
 $price
 ```
 
-### 2. Excel Sorter (`Tools/Excell Sorter`)
-
-Automatically sorts Excel files by card number and variant type for better organization.
-
-**Features:**
-- Sorts by card number (ascending)
-- Secondary sort by variant type (Normal, then Reverse Holo)
-- Works with any Excel file in the script directory
-- Command-line interface for flexibility
-- Reorder Excel file by card number mantaining Reverso Holo below normal variant
-
-**Requirements:**
-- Excel file must contain "Number" and "Variant Type" columns
-- File must be in .xlsx or .xlsm format
-
-**How to use:**
-- Excel file must be located on same folder as Excell sorter
-- Run the tool
-
-### 3. Marker Maker
+### 2. Marker Maker
 
 Creates custom visual markers for your Pokémon card collection.
 
