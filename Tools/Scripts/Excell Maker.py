@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import re
 import sys
+import os
 from collections import defaultdict
 from typing import List, Dict, Tuple, Optional
 from pathlib import Path
@@ -11,6 +12,16 @@ except ImportError:
     print("This script requires pandas. Install with: pip install pandas openpyxl")
     sys.exit(1)
 
+# Fix stdin for PyInstaller onefile executables
+if hasattr(sys, '_MEIPASS'):
+    # Running as PyInstaller executable
+    if sys.stdin is None or not sys.stdin.isatty():
+        # Reopen stdin if it's been lost
+        try:
+            sys.stdin = open('CONIN$', 'r')
+        except Exception:
+            pass
+
 def read_blocked_input(prompt: str) -> List[str]:
     print(prompt)
     print("(Paste the list, then enter a single '.' on a new line to finish)")
@@ -18,7 +29,7 @@ def read_blocked_input(prompt: str) -> List[str]:
     while True:
         try:
             line = input()
-        except EOFError:
+        except (EOFError, RuntimeError):
             break
         if line.strip() == '.':
             break
@@ -205,9 +216,15 @@ def main():
     print("This script will create an Excel file and automatically sort it.\n")
     
     # Get set information from user
-    set_name = input("Enter Set Name: ").strip()
-    set_number = input("Enter Set Number: ").strip()
-    set_era = input("Enter Set Era (e.g., SV, SWSH): ").strip()
+    try:
+        set_name = input("Enter Set Name: ").strip()
+        set_number = input("Enter Set Number: ").strip()
+        set_era = input("Enter Set Era (e.g., SV, SWSH): ").strip()
+    except (EOFError, RuntimeError) as e:
+        print(f"Error reading input: {e}")
+        print("Please run this program from a command prompt/terminal.")
+        input("Press Enter to exit...")
+        return
     
     if not set_name or not set_number or not set_era:
         print("Error: Set Name, Set Number, and Set Era are required.")
